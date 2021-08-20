@@ -6,7 +6,8 @@ import { Animal } from './modules/animals/animals.model';
 import { Owner } from './modules/owners/owners.model';
 import { Species } from './modules/animals/species.model';
 import { Address } from './modules/owners/adresses.model';
-import { Test } from './modules/animals/test.model';
+import { AuthModule } from './modules/auth/auth.module';
+import { User } from './modules/users/users/users.model';
 
 @Module({
   controllers: [],
@@ -14,6 +15,7 @@ import { Test } from './modules/animals/test.model';
   imports: [
     AnimalsModule,
     OwnersModule,
+    AuthModule,
     SequelizeModule.forRoot({
       dialect: 'postgres',
       host: 'localhost',
@@ -21,7 +23,7 @@ import { Test } from './modules/animals/test.model';
       username: 'postgres',
       password: '123456',
       database: 'vet-base',
-      models: [Test, Species, Address, Owner, Animal],
+      models: [Species, Address, Owner, Animal, User],
       autoLoadModels: true,
     }),
   ],
