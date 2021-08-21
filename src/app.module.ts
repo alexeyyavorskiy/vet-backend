@@ -8,6 +8,7 @@ import { Species } from './modules/animals/species.model';
 import { Address } from './modules/owners/adresses.model';
 import { AuthModule } from './modules/auth/auth.module';
 import { User } from './modules/users/users/users.model';
+import { UsersModule } from './modules/users/users/users.module';
 
 @Module({
   controllers: [],
@@ -16,6 +17,7 @@ import { User } from './modules/users/users/users.model';
     AnimalsModule,
     OwnersModule,
     AuthModule,
+    UsersModule,
     SequelizeModule.forRoot({
       dialect: 'postgres',
       host: 'localhost',

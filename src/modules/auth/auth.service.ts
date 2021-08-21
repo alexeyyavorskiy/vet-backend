@@ -18,11 +18,22 @@ export class AuthService {
     return this.generateToken(user);
   }
 
+  private async validateUser(userDto: AuthDto) {
+    const user = await this.userService.getUserByEmail(userDto.email);
+    if (user) {
+      const passwordEquals = await bcrypt.compare(userDto.password, user.password);
+      if (passwordEquals) {
+        return user;
+      }
+    }
+    throw new UnauthorizedException({ message: 'Incorrect email or password' });
+  }
+
   async signUp(authDto: AuthDto) {
     if (await this.userService.getUserByEmail(authDto.email)) {
       throw new HttpException('User with this email already exists', HttpStatus.BAD_REQUEST);
     }
-    const hashedPassword = await bcrypt.hash(authDto.password, 5);
+    const hashedPassword = await bcrypt.hash(authDto.password, 10);
     const user = await this.userService.createUser({ ...authDto, password: hashedPassword });
     return this.generateToken(user);
   }
@@ -32,15 +43,6 @@ export class AuthService {
     return {
       token: this.jwtService.sign(payload),
     };
-  }
-
-  private async validateUser(userDto: AuthDto) {
-    const user = await this.userService.getUserByEmail(userDto.email);
-    const passwordEquals = await bcrypt.compare(userDto.password, user.password);
-    if (user && passwordEquals) {
-      return user;
-    }
-    throw new UnauthorizedException({ message: 'Incorrect email or password' });
   }
 
 }
