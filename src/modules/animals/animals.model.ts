@@ -3,15 +3,16 @@ import { IAnimal } from '../shared/models/interfaces/animal';
 import { Species } from './species.model';
 import { Owner } from '../owners/owners.model';
 import { IPet } from '../shared/models/interfaces/pet';
+import { IWildAnimal } from '../shared/models/interfaces/wild-animal';
 
 @Table({ tableName: 'animals' })
-export class Animal extends Model<Animal, IAnimal | IPet> {
+export class Animal extends Model<Animal, IWildAnimal | IPet> {
 
   @Column({ type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true })
   id: number;
 
-  @Column({ type: DataType.DATE, defaultValue: DataType.NOW })
-  birthDay: Date;
+  @Column({ type: DataType.STRING})
+  birthDay: string;
 
   @Column({ type: DataType.BOOLEAN, defaultValue: false })
   vaccinated: boolean;

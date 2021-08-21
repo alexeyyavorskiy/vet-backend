@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { CreateOwnerDto } from './dto/create-owner.dto';
 import { OwnersService } from './owners.service';
 
@@ -9,12 +9,22 @@ export class OwnersController {
   }
 
 
-  @Post()
+  @Post('/create')
   create(@Body() ownerDto: CreateOwnerDto) {
     return this.ownersService.createOwner(ownerDto);
   }
 
-  @Get()
+  // @Put()
+  // update(@Param() params, @Body() ownerDto: UpdateOwnerDto) {
+  //   return this.ownersService.update(params.id, ownerDto);
+  // }
+
+  @Delete('/delete/:id')
+  update(@Param('id') id: number) {
+    return this.ownersService.delete(id);
+  }
+
+  @Get('/getAll')
   getAll() {
     return this.ownersService.getAllOwners();
   }

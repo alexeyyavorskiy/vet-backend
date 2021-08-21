@@ -2,9 +2,9 @@ import { IAddress } from './address';
 import { IAnimal } from './animal';
 
 export interface IOwner {
-  id?: string;
+  id?: number;
   fullName: string;
-  address: IAddress;
+  address?: IAddress;
   addressId?: string;
   animal?: IAnimal;
   animalId?: string;
