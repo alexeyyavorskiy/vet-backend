@@ -21,7 +21,6 @@ export class AnimalsService {
     dto.ownerId = owner.id;
     const animal: Pet = await this.petRepository.create(dto);
     dto.species.petId = animal.id;
-    dto.species.wildId = animal.id;
     const species = await this.speciesesService.create(dto.species);
     await animal.$set('species', species.id);
     animal.species = species;
