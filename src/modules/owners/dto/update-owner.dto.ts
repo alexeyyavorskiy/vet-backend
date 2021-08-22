@@ -1,8 +1,8 @@
-import { IAddress } from '../../shared/models/interfaces/address';
+import { UpdateAddressDto } from './update-address.dto';
 
 export class UpdateOwnerDto {
   readonly id: number;
   readonly fullName: string;
-  readonly address?: IAddress;
+  readonly address?: UpdateAddressDto;
   readonly addressId?: string;
 }

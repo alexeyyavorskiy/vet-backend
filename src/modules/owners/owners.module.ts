@@ -6,12 +6,21 @@ import { Address } from './adresses.model';
 import { Owner } from './owners.model';
 import { Species } from '../animals/species.model';
 import { Animal } from '../animals/animals.model';
+import { AddressService } from './addresses.service';
+import { AddressController } from './addresses.controller';
 
 @Module({
-  controllers: [OwnersController],
-  providers: [OwnersService],
+  controllers: [
+    OwnersController,
+    AddressController,
+  ],
+  providers: [
+    OwnersService,
+    AddressService,
+  ],
   imports: [
-    SequelizeModule.forFeature([Address, Owner, Species, Animal])
-  ]
+    SequelizeModule.forFeature([Address, Owner, Species, Animal]),
+  ],
 })
-export class OwnersModule {}
+export class OwnersModule {
+}

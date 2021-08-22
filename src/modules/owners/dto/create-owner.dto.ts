@@ -1,6 +1,6 @@
-import { IAddress } from '../../shared/models/interfaces/address';
+import { CreateAddressDto } from './create-address.dto';
 
 export class CreateOwnerDto {
   readonly fullName: string;
-  readonly address?: IAddress;
+  readonly address?: CreateAddressDto;
 }
