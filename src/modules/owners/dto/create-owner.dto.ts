@@ -1,4 +1,4 @@
-import { CreateAddressDto } from './create-address.dto';
+import { CreateAddressDto } from '../../addresses/dto/create-address.dto';
 
 export class CreateOwnerDto {
   readonly fullName: string;

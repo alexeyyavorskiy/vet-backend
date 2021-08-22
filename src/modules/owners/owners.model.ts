@@ -1,9 +1,9 @@
 import { Column, DataType, HasOne, Model, Table } from 'sequelize-typescript';
 import { IOwner } from '../shared/models/interfaces/owner';
-import { Address } from './adresses.model';
-import { Animal } from '../animals/animals.model';
+import { Address } from '../addresses/adresses.model';
 import { IAddress } from '../shared/models/interfaces/address';
-import { IAnimal } from '../shared/models/interfaces/animal';
+import { Pet } from '../animals/pets.model';
+import { IPet } from '../shared/models/interfaces/pet';
 
 @Table({ tableName: 'owners' })
 export class Owner extends Model<Owner, IOwner> {
@@ -17,7 +17,7 @@ export class Owner extends Model<Owner, IOwner> {
   @HasOne(() => Address)
   address: IAddress;
 
-  @HasOne(() => Animal)
-  animal: IAnimal;
+  @HasOne(() => Pet)
+  animal: IPet;
 
 }

@@ -1,11 +1,10 @@
 import { BelongsTo, Column, DataType, ForeignKey, HasOne, Model, Table } from 'sequelize-typescript';
 import { Species } from '../specieses/species.model';
-import { Owner } from '../owners/owners.model';
-import { CreateAnimalDto } from './dto/create-animal.dto';
 import { ISpecies } from '../shared/models/interfaces/species';
+import { IWildAnimal } from '../shared/models/interfaces/wild-animal';
 
 @Table({ tableName: 'animals' })
-export class Animal extends Model<Animal, CreateAnimalDto> {
+export class Wild extends Model<Wild, IWildAnimal> {
 
   @Column({ type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true })
   id: number;
@@ -21,15 +20,5 @@ export class Animal extends Model<Animal, CreateAnimalDto> {
 
   @HasOne(() => Species)
   species: ISpecies;
-
-  @BelongsTo(() => Owner)
-  owner: Owner;
-
-  @ForeignKey(() => Owner)
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: true,
-  })
-  ownerId: number;
 
 }

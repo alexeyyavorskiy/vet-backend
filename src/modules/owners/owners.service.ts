@@ -4,7 +4,7 @@ import { Owner } from './owners.model';
 import { CreateOwnerDto } from './dto/create-owner.dto';
 import { IOwner } from '../shared/models/interfaces/owner';
 import { UpdateOwnerDto } from './dto/update-owner.dto';
-import { AddressService } from './addresses.service';
+import { AddressService } from '../addresses/addresses.service';
 
 @Injectable()
 export class OwnersService {
@@ -23,7 +23,7 @@ export class OwnersService {
     return this.getById(owner.id);
   }
 
-  async getAllOwners(): Promise<IOwner[]> {
+  async getAll(): Promise<IOwner[]> {
     return await this.ownerRepository.findAll({ include: { all: true } });
   }
 

@@ -1,11 +1,12 @@
 import { BelongsTo, Column, DataType, ForeignKey, HasOne, Model, Table } from 'sequelize-typescript';
 import { Species } from '../specieses/species.model';
 import { Owner } from '../owners/owners.model';
-import { CreateAnimalDto } from './dto/create-animal.dto';
 import { ISpecies } from '../shared/models/interfaces/species';
+import { IPet } from '../shared/models/interfaces/pet';
+import { IOwner } from '../shared/models/interfaces/owner';
 
 @Table({ tableName: 'animals' })
-export class Animal extends Model<Animal, CreateAnimalDto> {
+export class Pet extends Model<Pet, IPet> {
 
   @Column({ type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true })
   id: number;
@@ -16,14 +17,11 @@ export class Animal extends Model<Animal, CreateAnimalDto> {
   @Column({ type: DataType.BOOLEAN, defaultValue: false })
   vaccinated: boolean;
 
-  @Column({ type: DataType.INTEGER, allowNull: false })
-  trackingId: number;
-
   @HasOne(() => Species)
   species: ISpecies;
 
   @BelongsTo(() => Owner)
-  owner: Owner;
+  owner: IOwner;
 
   @ForeignKey(() => Owner)
   @Column({

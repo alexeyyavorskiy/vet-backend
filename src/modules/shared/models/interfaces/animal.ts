@@ -4,6 +4,6 @@ export interface IAnimal {
   id?: number;
   birthDay: string;
   species: ISpecies;
-  speciesId?: string;
+  speciesId?: number;
   vaccinated: boolean;
 }

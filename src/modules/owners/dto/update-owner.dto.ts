@@ -1,4 +1,4 @@
-import { UpdateAddressDto } from './update-address.dto';
+import { UpdateAddressDto } from '../../addresses/dto/update-address.dto';
 
 export class UpdateOwnerDto {
   readonly id: number;

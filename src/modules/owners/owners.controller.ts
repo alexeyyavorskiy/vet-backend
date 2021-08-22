@@ -27,6 +27,6 @@ export class OwnersController {
 
   @Get('/getAll')
   getAll() {
-    return this.ownersService.getAllOwners();
+    return this.ownersService.getAll();
   }
 }

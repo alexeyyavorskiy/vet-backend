@@ -1,6 +1,6 @@
 import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
 import { IAddress } from '../shared/models/interfaces/address';
-import { Owner } from './owners.model';
+import { Owner } from '../owners/owners.model';
 
 @Table({ tableName: 'addresses' })
 export class Address extends Model<Address, IAddress> {

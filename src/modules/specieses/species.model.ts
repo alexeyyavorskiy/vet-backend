@@ -1,6 +1,7 @@
 import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
 import { ISpecies } from '../shared/models/interfaces/species';
-import { Animal } from './animals.model';
+import { Pet } from '../animals/pets.model';
+import { Wild } from '../animals/wilds.model';
 
 @Table({tableName: 'species'})
 export class Species extends Model<Species, ISpecies> {
@@ -11,13 +12,24 @@ export class Species extends Model<Species, ISpecies> {
   @Column({type: DataType.STRING, allowNull: false})
   label: string;
 
-  @BelongsTo(() => Animal)
-  animal: Animal;
+  @BelongsTo(() => Pet)
+  pet: Pet;
 
-  @ForeignKey(() => Animal)
+  @ForeignKey(() => Pet)
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
-  animalId: number;
+  petId: number;
+
+  @BelongsTo(() => Wild)
+  wild: Wild;
+
+  @ForeignKey(() => Wild)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
+  wildId: number;
+
 }
