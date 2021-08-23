@@ -6,8 +6,7 @@ import { Species } from '../specieses/species.model';
 import { Owner } from '../owners/owners.model';
 import { OwnersModule } from '../owners/owners.module';
 import { SpeciesesModule } from '../specieses/specieses.module';
-import { Wild } from './wilds.model';
-import { Pet } from './pets.model';
+import { Animal } from './animals.model';
 
 @Module({
   controllers: [AnimalsController],
@@ -15,7 +14,7 @@ import { Pet } from './pets.model';
   imports: [
     SpeciesesModule,
     OwnersModule,
-    SequelizeModule.forFeature([Owner, Species, Pet, Wild]),
+    SequelizeModule.forFeature([Owner, Species, Animal]),
   ],
 })
 export class AnimalsModule {

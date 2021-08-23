@@ -1,60 +1,65 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { SpeciesesService } from '../specieses/specieses.service';
-import { Pet } from './pets.model';
-import { Wild } from './wilds.model';
-import { IPet } from '../shared/models/interfaces/pet';
-import { CreatePetDto } from './dto/create-pet.dto';
-import { UpdatePetDto } from './dto/update-pet.dto';
 import { OwnersService } from '../owners/owners.service';
+import { Animal } from './animals.model';
+import { CreateAnimalDto } from './dto/create-animal.dto';
+import { UpdateAnimalDto } from './dto/update-animal.dto';
+import { IAnimal } from '../shared/models/interfaces/animal';
+import { Owner } from '../owners/owners.model';
 
 @Injectable()
 export class AnimalsService {
-  constructor(@InjectModel(Pet) private petRepository: typeof Pet,
-              @InjectModel(Wild) private wildRepository: typeof Wild,
+  constructor(@InjectModel(Animal) private animalRepository: typeof Animal,
               private speciesesService: SpeciesesService,
               private ownersService: OwnersService) {
   }
 
-  async createPet(dto: CreatePetDto): Promise<IPet> {
-    const owner = await this.ownersService.create(dto.owner);
-    dto.ownerId = owner.id;
-    const animal: Pet = await this.petRepository.create(dto);
-    dto.species.petId = animal.id;
+  async create(dto: CreateAnimalDto): Promise<IAnimal> {
+    let owner;
+    if (dto.owner) {
+      owner = await this.ownersService.create(dto.owner);
+      dto.ownerId = owner.id;
+    }
+    const animal: Animal = await this.animalRepository.create(dto);
+    dto.species.animalId = animal.id;
     const species = await this.speciesesService.create(dto.species);
     await animal.$set('species', species.id);
     animal.species = species;
-    //
-    await animal.$set('owner', owner.id);
-    animal.owner = owner;
-
+    if (owner) {
+      await animal.$set('owner', owner.id);
+      animal.owner = owner;
+    }
     await animal.save();
-    return this.getPetById(animal.id);
+    return this.getById(animal.id);
   }
 
-  async getAllPets(): Promise<IPet[]> {
-    return await this.petRepository.findAll({ include: { all: true } });
+  async getAll(): Promise<IAnimal[]> {
+    return await this.animalRepository.findAll({ include: { all: true } });
   }
 
-  async updatePet(id: number, updatePetDto: UpdatePetDto): Promise<IPet> {
-    const pet = await this.getPetById(id);
-    if (updatePetDto.species) {
-      await this.speciesesService.update(pet.species.id, updatePetDto.species);
+  async update(id: number, dto: UpdateAnimalDto): Promise<IAnimal> {
+    const animal: any = await this.getById(id);
+    if (dto.species) {
+      await this.speciesesService.update(animal.species.id, dto.species);
     }
-    await this.petRepository.update(updatePetDto, { where: { id } });
-    return this.getPetById(id);
-  }
-
-  async getPetById(id: number): Promise<IPet> {
-    return await this.petRepository.findByPk(id, { include: { all: true } });
-  }
-
-  async deletePet(id: number): Promise<IPet> {
-    const pet = await this.getPetById(id);
-    if (pet.species) {
-      await this.speciesesService.delete(pet.species.id);
+    if (dto.owner) {
+      await this.ownersService.update(animal.owner.id, dto.owner);
     }
-    await this.petRepository.destroy({ where: { id } });
-    return pet;
+    await this.animalRepository.update(dto, { where: { id } });
+    return this.getById(id);
+  }
+
+  async getById(id: number): Promise<IAnimal> {
+    return await this.animalRepository.findByPk(id, { include: { all: true } });
+  }
+
+  async delete(id: number): Promise<IAnimal> {
+    const animal = await this.getById(id);
+    if (animal.species) {
+      await this.speciesesService.delete(animal.species.id);
+    }
+    await this.animalRepository.destroy({ where: { id } });
+    return animal;
   }
 }

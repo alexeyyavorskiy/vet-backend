@@ -1,4 +1,4 @@
-import { BelongsTo, Column, DataType, ForeignKey, HasOne, Model, Table } from 'sequelize-typescript';
+import { Column, DataType, HasOne, Model, Table } from 'sequelize-typescript';
 import { Species } from '../specieses/species.model';
 import { ISpecies } from '../shared/models/interfaces/species';
 import { IWildAnimal } from '../shared/models/interfaces/wild-animal';

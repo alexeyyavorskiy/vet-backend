@@ -8,8 +8,7 @@ import { Address } from './modules/addresses/adresses.model';
 import { AuthModule } from './modules/auth/auth.module';
 import { User } from './modules/users/users/users.model';
 import { UsersModule } from './modules/users/users/users.module';
-import { Wild } from './modules/animals/wilds.model';
-import { Pet } from './modules/animals/pets.model';
+import { Animal } from './modules/animals/animals.model';
 
 @Module({
   controllers: [],
@@ -26,7 +25,7 @@ import { Pet } from './modules/animals/pets.model';
       username: 'postgres',
       password: '123456',
       database: 'vet-base',
-      models: [Species, Address, Owner, Pet, Wild, User],
+      models: [Species, Address, Owner, Animal, User],
       autoLoadModels: true,
     }),
   ],

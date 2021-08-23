@@ -26,7 +26,7 @@ export class Pet extends Model<Pet, IPet> {
   @ForeignKey(() => Owner)
   @Column({
     type: DataType.INTEGER,
-    allowNull: true,
+    allowNull: false
   })
   ownerId: number;
 

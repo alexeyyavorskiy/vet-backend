@@ -15,11 +15,13 @@ export class OwnersService {
 
   async create(dto: CreateOwnerDto): Promise<IOwner> {
     const owner = await this.ownerRepository.create(dto);
-    dto.address.ownerId = owner.id;
-    const address = await this.addressService.create(dto.address);
-    await owner.$set('address', address.id);
-    owner.address = address;
-    await owner.save();
+    if (dto.address) {
+      dto.address.ownerId = owner.id;
+      const address = await this.addressService.create(dto.address);
+      await owner.$set('address', address.id);
+      owner.address = address;
+      await owner.save();
+    }
     return this.getById(owner.id);
   }
 

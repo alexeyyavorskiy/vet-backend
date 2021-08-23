@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { AnimalsService } from './animals.service';
-import { UpdatePetDto } from './dto/update-pet.dto';
-import { CreatePetDto } from './dto/create-pet.dto';
+import { CreateAnimalDto } from './dto/create-animal.dto';
+import { UpdateAnimalDto } from './dto/update-animal.dto';
 
 @Controller('animals')
 export class AnimalsController {
@@ -10,24 +10,24 @@ export class AnimalsController {
   constructor(private animalsService: AnimalsService) {
   }
 
-  @Post('/pet/create')
-  create(@Body() petDto: CreatePetDto) {
-    return this.animalsService.createPet(petDto);
+  @Post('/create')
+  create(@Body() dto: CreateAnimalDto) {
+    return this.animalsService.create(dto);
   }
 
-  @Put('/pet/update/:id')
-  update(@Param() params, @Body() petDto: UpdatePetDto) {
-    return this.animalsService.updatePet(params.id, petDto);
+  @Put('/update/:id')
+  update(@Param() params, @Body() dto: UpdateAnimalDto) {
+    return this.animalsService.update(params.id, dto);
   }
 
-  @Delete('/pet/delete/:id')
+  @Delete('/delete/:id')
   delete(@Param() params) {
-    return this.animalsService.deletePet(params.id);
+    return this.animalsService.delete(params.id);
   }
 
-  @Get('/pet/getAll')
+  @Get('/getAll')
   getAll() {
-    return this.animalsService.getAllPets();
+    return this.animalsService.getAll();
   }
 
 }
