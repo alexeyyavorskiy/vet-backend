@@ -6,7 +6,6 @@ import { Animal } from './animals.model';
 import { CreateAnimalDto } from './dto/create-animal.dto';
 import { UpdateAnimalDto } from './dto/update-animal.dto';
 import { IAnimal } from '../shared/models/interfaces/animal';
-import { Owner } from '../owners/owners.model';
 
 @Injectable()
 export class AnimalsService {
@@ -55,9 +54,12 @@ export class AnimalsService {
   }
 
   async delete(id: number): Promise<IAnimal> {
-    const animal = await this.getById(id);
+    const animal: any = await this.getById(id);
     if (animal.species) {
       await this.speciesesService.delete(animal.species.id);
+    }
+    if (animal.owner) {
+      await this.ownersService.delete(animal.owner.id);
     }
     await this.animalRepository.destroy({ where: { id } });
     return animal;
