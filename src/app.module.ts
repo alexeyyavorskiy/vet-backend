@@ -9,6 +9,9 @@ import { AuthModule } from './modules/auth/auth.module';
 import { User } from './modules/users/users/users.model';
 import { UsersModule } from './modules/users/users/users.module';
 import { Animal } from './modules/animals/animals.model';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   controllers: [],
@@ -18,15 +21,21 @@ import { Animal } from './modules/animals/animals.model';
     OwnersModule,
     AuthModule,
     UsersModule,
+    ConfigModule.forRoot({
+      envFilePath: '.env'
+    }),
     SequelizeModule.forRoot({
       dialect: 'postgres',
-      host: 'localhost',
+      host: process.env.POSTGRES_HOST,
       port: 5432,
-      username: 'postgres',
-      password: '123456',
-      database: 'vet-base',
+      username: process.env.POSTGRES_USERNAME,
+      password: process.env.POSTGRES_PASSWORD,
+      database: process.env.POSTGRES_DATABASE,
       models: [Species, Address, Owner, Animal, User],
       autoLoadModels: true,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'build'),
     }),
   ],
 })

@@ -30,4 +30,9 @@ export class AnimalsController {
     return this.animalsService.getAll();
   }
 
+  @Get('/getById/:id')
+  getById(@Param() params) {
+    return this.animalsService.getById(params.id);
+  }
+
 }

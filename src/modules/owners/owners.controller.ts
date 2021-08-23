@@ -29,4 +29,9 @@ export class OwnersController {
   getAll() {
     return this.ownersService.getAll();
   }
+
+  @Get('/getById/:id')
+  getById(@Param() params) {
+    return this.ownersService.getById(params.id);
+  }
 }
