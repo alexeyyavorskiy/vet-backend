@@ -29,7 +29,7 @@ export class Animal extends Model<Animal, CreateAnimalDto> {
   @ForeignKey(() => Owner)
   @Column({
     type: DataType.INTEGER,
-    allowNull: false
+    allowNull: true
   })
   ownerId: number;
 

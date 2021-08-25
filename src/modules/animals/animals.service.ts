@@ -33,8 +33,10 @@ export class AnimalsService {
     return this.getById(animal.id);
   }
 
-  async getAll(): Promise<IAnimal[]> {
-    return await this.animalRepository.findAll({ include: { all: true } });
+  async getAll(): Promise<any[]> {
+    return await this.animalRepository.findAll(
+      { include: { all: true} }
+    );
   }
 
   async update(id: number, dto: UpdateAnimalDto): Promise<IAnimal> {
